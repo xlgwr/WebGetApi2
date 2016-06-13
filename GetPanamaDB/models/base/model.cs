@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace GetPanamaDB.models
 {
-    public abstract class entity
+    public abstract class model
     {
         public string Remark { get; set; }
+                
+        public int getPage { get; set; }
 
         public int tStatus { get; set; }
 

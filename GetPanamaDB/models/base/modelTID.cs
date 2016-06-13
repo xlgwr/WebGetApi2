@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GetPanamaDB.models
 {
-    public abstract class entityTID : entity
+    public abstract class modelTID : model
     {
         [Key]
         [Column(Order = 0)]

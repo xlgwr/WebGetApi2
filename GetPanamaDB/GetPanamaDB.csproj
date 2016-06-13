@@ -71,18 +71,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="models\entity.cs" />
-    <Compile Include="models\entityCommMain.cs" />
-    <Compile Include="models\entityItems.cs" />
-    <Compile Include="models\entityMain.cs" />
-    <Compile Include="models\entityTID.cs" />
+    <Compile Include="Migrations\201606080712342_initFirst.cs" />
+    <Compile Include="Migrations\201606080712342_initFirst.Designer.cs">
+      <DependentUpon>201606080712342_initFirst.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606130617383_addPageForAll.cs" />
+    <Compile Include="Migrations\201606130617383_addPageForAll.Designer.cs">
+      <DependentUpon>201606130617383_addPageForAll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606130658053_addIndexForConnections.cs" />
+    <Compile Include="Migrations\201606130658053_addIndexForConnections.Designer.cs">
+      <DependentUpon>201606130658053_addIndexForConnections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="models\Connections.cs" />
+    <Compile Include="models\base\model.cs" />
+    <Compile Include="models\EntitysAll.cs" />
+    <Compile Include="models\base\modelTID.cs" />
+    <Compile Include="models\GetPanamaDbContext.cs" />
+    <Compile Include="models\modelviews\EntityConnect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="log4net.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201606080712342_initFirst.resx">
+      <DependentUpon>201606080712342_initFirst.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606130617383_addPageForAll.resx">
+      <DependentUpon>201606130617383_addPageForAll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606130658053_addIndexForConnections.resx">
+      <DependentUpon>201606130658053_addIndexForConnections.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
