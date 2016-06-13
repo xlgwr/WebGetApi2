@@ -7,13 +7,13 @@ namespace GetPanamaDB.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class addPageForAll : IMigrationMetadata
+    public sealed partial class initFirst : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addPageForAll));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initFirst));
         
         string IMigrationMetadata.Id
         {
-            get { return "201606130617383_addPageForAll"; }
+            get { return "201606131002121_initFirst"; }
         }
         
         string IMigrationMetadata.Source

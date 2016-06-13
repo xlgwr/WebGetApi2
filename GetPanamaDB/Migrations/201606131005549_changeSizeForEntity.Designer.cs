@@ -7,13 +7,13 @@ namespace GetPanamaDB.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class addIndexForConnections : IMigrationMetadata
+    public sealed partial class changeSizeForEntity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addIndexForConnections));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(changeSizeForEntity));
         
         string IMigrationMetadata.Id
         {
-            get { return "201606130658053_addIndexForConnections"; }
+            get { return "201606131005549_changeSizeForEntity"; }
         }
         
         string IMigrationMetadata.Source

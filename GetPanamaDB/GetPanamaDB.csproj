@@ -71,17 +71,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201606080712342_initFirst.cs" />
-    <Compile Include="Migrations\201606080712342_initFirst.Designer.cs">
-      <DependentUpon>201606080712342_initFirst.cs</DependentUpon>
+    <Compile Include="Migrations\201606131002121_initFirst.cs" />
+    <Compile Include="Migrations\201606131002121_initFirst.Designer.cs">
+      <DependentUpon>201606131002121_initFirst.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606130617383_addPageForAll.cs" />
-    <Compile Include="Migrations\201606130617383_addPageForAll.Designer.cs">
-      <DependentUpon>201606130617383_addPageForAll.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606130658053_addIndexForConnections.cs" />
-    <Compile Include="Migrations\201606130658053_addIndexForConnections.Designer.cs">
-      <DependentUpon>201606130658053_addIndexForConnections.cs</DependentUpon>
+    <Compile Include="Migrations\201606131005549_changeSizeForEntity.cs" />
+    <Compile Include="Migrations\201606131005549_changeSizeForEntity.Designer.cs">
+      <DependentUpon>201606131005549_changeSizeForEntity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Connections.cs" />
@@ -100,14 +96,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606080712342_initFirst.resx">
-      <DependentUpon>201606080712342_initFirst.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606131002121_initFirst.resx">
+      <DependentUpon>201606131002121_initFirst.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606130617383_addPageForAll.resx">
-      <DependentUpon>201606130617383_addPageForAll.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606130658053_addIndexForConnections.resx">
-      <DependentUpon>201606130658053_addIndexForConnections.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606131005549_changeSizeForEntity.resx">
+      <DependentUpon>201606131005549_changeSizeForEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

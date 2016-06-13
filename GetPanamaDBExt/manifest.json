@@ -1,0 +1,45 @@
+{
+    "content_scripts": [{
+        "matches": [
+            "https://panamadb.org/*"
+        ],
+        "all_frames": true,
+        "js": [
+            "lib/jquery.min.js",
+            "config.js",
+            "getwebData.js"
+        ],
+        "run_at": "document_end"
+    }],
+    "browser_action": {
+        "default_icon": "icons/icon_32.png",
+        //"default_popup": "popup.html",
+        "default_title": "Get panamadb Data 数据采集用，请不要删除"
+    },
+    "description": "Get panamadb Data 数据采集用，请不要删除:-)",
+    //"key": "",
+    "name": "Get panamadb Data 数据采集用，请不要删除 for Chrome",
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "icons": {
+        "16": "icons/icon_16.png",
+        "32": "icons/icon_32.png",
+        "48": "icons/icon_48.png",
+        "64": "icons/icon_64.png"
+    },
+    "homepage_url": "http://www.baidu.com/",
+    "permissions": [
+        "tabs",
+        "cookies",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "update_url": "http://www.baidu.com/",
+    "background": {
+        "persistent": true,
+        "page": "background.html"
+            // "scripts": [
+            //     "background.js"
+            // ]
+    }
+}

@@ -16,22 +16,24 @@ namespace GetPanamaDB.models
     {
 
         [Index(IsUnique = true)]
-        [StringLength(256)]
+        [StringLength(32)]
         public string name { get; set; }
+
+        public string nameDesc { get; set; }
 
         /// <summary>
         /// 公司/地址/中介/人员
         /// Entity/Address/Intermediary/Officer
         /// </summary>
         [Index(Order = 1)]
-        [StringLength(256)]
+        [StringLength(32)]
         public string ttype { get; set; }
 
         /// <summary>
         /// 国家
         /// </summary>
         [Index(Order = 2)]
-        [StringLength(256)]
+        [StringLength(32)]
         public string Countries { get; set; }
 
         /// <summary>

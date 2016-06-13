@@ -21,8 +21,9 @@ namespace GetPanamaDB.models
         /// Intermediary/Officer
         /// </summary>
         [Index(Order = 0)]
-        [StringLength(256)]
+        [StringLength(32)]
         public string nameFrom { get; set; }
+        public string nameFromDesc { get; set; }
 
         [Index(Order = 2)]
         [StringLength(256)]
@@ -33,8 +34,9 @@ namespace GetPanamaDB.models
         /// Entity/Address
         /// </summary>
         [Index(Order = 2)]
-        [StringLength(256)]
+        [StringLength(32)]
         public string nameTo { get; set; }
+        public string nameToDesc { get; set; }
 
     }
 }

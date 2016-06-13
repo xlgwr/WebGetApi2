@@ -313,6 +313,7 @@
     <Content Include="Scripts\ai.0.22.17-build00153.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Config\config.js" />
     <Content Include="Scripts\GetWebData\panamadb.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />

@@ -25,6 +25,10 @@ namespace GetPanamaDBWebApi
                       "~/Content/site.css"));
 
             //add new by xlg
+
+            bundles.Add(new ScriptBundle("~/bundles/Config").Include(
+                        "~/Scripts/Config/config.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/GetWebData").Include(
                         "~/Scripts/GetWebData/*.js"));
         }
