@@ -16,7 +16,7 @@ namespace GetPanamaDB.models
     {
 
         [Index(IsUnique = true)]
-        [StringLength(32)]
+        [StringLength(128)]
         public string name { get; set; }
 
         public string nameDesc { get; set; }
@@ -33,7 +33,7 @@ namespace GetPanamaDB.models
         /// 国家
         /// </summary>
         [Index(Order = 2)]
-        [StringLength(32)]
+        [StringLength(128)]
         public string Countries { get; set; }
 
         /// <summary>

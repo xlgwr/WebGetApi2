@@ -26,6 +26,7 @@ namespace GetPanamaDBWebApi.Controllers
 
         private static Dictionary<string, bool> getEntity = new Dictionary<string, bool>();
         private static Dictionary<string, bool> getConnection = new Dictionary<string, bool>();
+        private static Dictionary<string, bool> getCountryItems = new Dictionary<string, bool>();
 
         // GET: api/entityCommMain
         public EntityConnect Get()
@@ -47,13 +48,13 @@ namespace GetPanamaDBWebApi.Controllers
 
         }
         [HttpGet]
-        [Route("getLast")]
-        [ResponseType(typeof(EntitysAll))]
-        public EntitysAll lastAddCountry()
+        [Route("api/getLast")]
+        [ResponseType(typeof(CountryItems))]
+        public CountryItems lastAddCountry()
         {
             try
             {
-                var tmpModelsLast = db.EntitysAll.OrderByDescending(m => m.addDate).Take(1).FirstOrDefault();
+                var tmpModelsLast = db.CountryItems.OrderByDescending(m => m.addDate).Take(1).FirstOrDefault();
                 return tmpModelsLast;
             }
             catch (Exception ex)
@@ -63,6 +64,78 @@ namespace GetPanamaDBWebApi.Controllers
             }
 
         }
+        [HttpGet]
+        [Route("api/topCountryItems/{id}")]
+        [ResponseType(typeof(ICollection<CountryItems>))]
+        public IQueryable<CountryItems> topCountryItems(int id)
+        {
+            try
+            {
+                if (id > 1000)
+                {
+                    id = 1000;
+                }
+                var tmpModelsLast = db.CountryItems.Where(m => m.tStatus == 0).Take(id);
+                return tmpModelsLast;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        // POST: api/CountryItems
+        [HttpPost]
+        [Route("api/CountryItems")]
+        [ResponseType(typeof(ICollection<CountryItems>))]
+        public async Task<IHttpActionResult> PCountryItems(ICollection<CountryItems> viewmodels)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                foreach (var item in viewmodels)
+                {
+                    item.ClientIP = HttpContext.Current.Request.UserHostAddress;
+                    item.UpdateDate = DateTime.Now;
+
+                    if (!string.IsNullOrEmpty(item.Countries) && !string.IsNullOrEmpty(item.name))
+                    {
+                        if (!getCountryItems.ContainsKey(item.name))
+                        {
+                            getCountryItems.Add(item.name, true);
+
+                            var exitDB = db.CountryItems.Count(m => m.name.Equals(item.name) && m.Countries.Equals(item.Countries));
+                            if (exitDB <= 0)
+                            {
+                                db.CountryItems.Add(item);
+                            }
+                        }
+
+                    }
+                }
+                //end
+                await db.SaveChangesAsync();
+
+                if (getCountryItems.Count > 50)
+                {
+                    getCountryItems.Clear();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return Ok();
+        }
+
+
         // POST: api/entityCommMain
         [ResponseType(typeof(EntityConnect))]
         public async Task<IHttpActionResult> Post(EntityConnect viewmodels)
@@ -89,7 +162,7 @@ namespace GetPanamaDBWebApi.Controllers
                             {
                                 getEntity.Add(viewmodels.entitysAll.name, true);
                                 //save db
-                                db.EntitysAll.Add(viewmodels.entitysAll);
+                                db.EntitysAll.Add(viewmodels.entitysAll);                               
                             }
                         }
                         else
@@ -133,41 +206,34 @@ namespace GetPanamaDBWebApi.Controllers
                                     getConnection.Add(tmpKey, true);
                                 }
 
-                                if (viewmodels.entitysAll.ttype.Equals("Address", StringComparison.InvariantCultureIgnoreCase))
-                                {
-                                    var toExitMain = db.Connections.Count(m => m.nameFrom.Equals(item.nameTo) && m.nameType.Equals(item.nameType) && m.nameTo.Equals(item.nameFrom));
-                                    if (toExitMain <= 0)
-                                    {
-                                        var tmpRchange = item.nameFrom;
-                                        item.nameFrom = item.nameTo;
-                                        item.nameTo = tmpRchange;
 
-                                        db.Connections.Add(item);
-
-                                    }
-                                }
-                                else
+                                var toExitMain = db.Connections.Count(m => m.nameFrom.Equals(item.nameFrom) && m.nameType.Equals(item.nameType) && m.nameTo.Equals(item.nameTo));
+                                if (toExitMain <= 0)
                                 {
-                                    var toExitMain = db.Connections.Count(m => m.nameFrom.Equals(item.nameFrom) && m.nameType.Equals(item.nameType) && m.nameTo.Equals(item.nameTo));
-                                    if (toExitMain <= 0)
-                                    {
-                                        db.Connections.Add(item);
-                                    }
+                                    db.Connections.Add(item);
                                 }
+
                             }
                         }
                     }
 
                 }
 
+                //change status
+                var tmpCurrCountry = db.CountryItems.Where(m => m.Tid == viewmodels.Tid).FirstOrDefault();
+                if (tmpCurrCountry != null)
+                {
+                    tmpCurrCountry.tStatus = 1;
+                }
+
                 //end
                 await db.SaveChangesAsync();
 
-                if (getEntity.Count > 1000)
+                if (getEntity.Count > 50)
                 {
                     getEntity.Clear();
                 }
-                if (getConnection.Count > 1000)
+                if (getConnection.Count > 50)
                 {
                     getConnection.Clear();
                 }

@@ -33,6 +33,7 @@ namespace GetPanamaDB.models
 
         public virtual DbSet<EntitysAll> EntitysAll { get; set; }
         public virtual DbSet<Connections> Connections { get; set; }
+        public virtual DbSet<CountryItems> CountryItems { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

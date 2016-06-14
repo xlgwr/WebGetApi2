@@ -79,9 +79,26 @@
     <Compile Include="Migrations\201606131005549_changeSizeForEntity.Designer.cs">
       <DependentUpon>201606131005549_changeSizeForEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606140110014_addCountryItems.cs" />
+    <Compile Include="Migrations\201606140110014_addCountryItems.Designer.cs">
+      <DependentUpon>201606140110014_addCountryItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606140345555_addColDescForCountryItems.cs" />
+    <Compile Include="Migrations\201606140345555_addColDescForCountryItems.Designer.cs">
+      <DependentUpon>201606140345555_addColDescForCountryItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606140417053_addchangeIndexFornameForCountryItems.cs" />
+    <Compile Include="Migrations\201606140417053_addchangeIndexFornameForCountryItems.Designer.cs">
+      <DependentUpon>201606140417053_addchangeIndexFornameForCountryItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606140455315_addchangeIndexForCountIndexCountryItems.cs" />
+    <Compile Include="Migrations\201606140455315_addchangeIndexForCountIndexCountryItems.Designer.cs">
+      <DependentUpon>201606140455315_addchangeIndexForCountIndexCountryItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Connections.cs" />
     <Compile Include="models\base\model.cs" />
+    <Compile Include="models\CountryItems.cs" />
     <Compile Include="models\EntitysAll.cs" />
     <Compile Include="models\base\modelTID.cs" />
     <Compile Include="models\GetPanamaDbContext.cs" />
@@ -89,7 +106,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -101,6 +120,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606131005549_changeSizeForEntity.resx">
       <DependentUpon>201606131005549_changeSizeForEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606140110014_addCountryItems.resx">
+      <DependentUpon>201606140110014_addCountryItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606140345555_addColDescForCountryItems.resx">
+      <DependentUpon>201606140345555_addColDescForCountryItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606140417053_addchangeIndexFornameForCountryItems.resx">
+      <DependentUpon>201606140417053_addchangeIndexFornameForCountryItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606140455315_addchangeIndexForCountIndexCountryItems.resx">
+      <DependentUpon>201606140455315_addchangeIndexForCountIndexCountryItems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

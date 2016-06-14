@@ -14,12 +14,5 @@ namespace GetPanamaDBWebApi.Controllers
 
             return View();
         }
-
-        public ActionResult getData()
-        {
-            ViewBag.Title = "Get Web Data";
-
-            return View();
-        }
     }
 }
