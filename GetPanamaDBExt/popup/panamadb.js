@@ -242,6 +242,7 @@
     function getItems() {
         ///获取未更新前N条记录。
 
+        var $currRunPage = 1;
         var $currItemIndex = 0;
         var $dataAllItems = [];
 
@@ -264,8 +265,12 @@
 
         function getItemsNext() {
 
+
             if ($currItemIndex < 0) {
                 $currItemIndex = 0;
+            }
+            if ($currRunPage < 1) {
+                $currRunPage = 1;
             }
 
             if ($currItemIndex >= $dataAllItems.length) {
@@ -274,13 +279,17 @@
                 getItems();
                 return;
             }
-            console.log("开始处理：" + $currItemIndex);
+            console.log("开始处理：" + $currItemIndex + ",Page:" + $currRunPage);
             var tmpItem = $dataAllItems[$currItemIndex];
             //console.log(tmpItem);
 
             //获取记录明细
             $.ajax({
                 type: 'GET',
+                data: {
+                    page: $currRunPage
+                },
+                tmppage: $currRunPage,
                 tmpdata: tmpItem,
                 timeout: 80000,
                 url: tmpItem.nameURL
@@ -295,173 +304,200 @@
                 var $table = $getDiv.find('table').eq(0);
                 var $tableTR = $table.find('tr');
 
-                var _remark = $getDiv.find('p[class="text-muted"]').eq(0).text().trim()
-
-                //console.log('Remark:' + _remark);
-
-                var postMain = {
-                    Tid: this.tmpdata.Tid,
-                    entitysAll: {
-                        $id: "2",
-                        name: this.tmpdata.name,
-                        nameDesc: this.tmpdata.nameDesc,
-                        ttype: this.tmpdata.ttype,
-                        Countries: this.tmpdata.CountriesDesc,
-
-                        Source: undefined,
-                        Status: undefined,
-                        Address: undefined,
-                        CompanyType: undefined,
-                        Jurisdiction: undefined,
-
-                        Tid: 0,
-                        Remark: _remark,
-                        getPage: 1,
-                        tStatus: 0,
-                        ClientIP: undefined,
-                        addDate: undefined,
-                        UpdateDate: undefined
-                    },
-                    connections: []
-                }
-
-                //get for main
-                for (var index = 0; index < $allp.length; index++) {
-                    var ptext = $allp.eq(index).text().replace(/[\↵\t\n\v\r]/g, '').trim();
-                    //console.log(index + ":" + ptext);
-                    if (ptext.indexOf("Source:") > -1) {
-                        postMain.entitysAll.Source = ptext.replace('Source:', '').trim();
-                        continue;
-                    }
-                    if (ptext.indexOf("Status:") > -1) {
-                        postMain.entitysAll.Status = ptext.replace('Status:', '').trim();
-                        continue;
-                    }
-                    if (ptext.indexOf("Address:") > -1) {
-                        postMain.entitysAll.Address = ptext.replace('Address:', '').trim();
-                        continue;
-                    }
-                    if (ptext.indexOf("CompanyType:") > -1) {
-                        postMain.entitysAll.CompanyType = ptext.replace('CompanyType:', '').trim();
-                        continue;
-                    }
-                    if (ptext.indexOf("Jurisdiction:") > -1) {
-                        postMain.entitysAll.Jurisdiction = ptext.replace('Jurisdiction:', '').replace(/[\ ]/g, '');
-                        continue;
-                    }
-                }
-                switch (this.tmpdata.ttype) {
-                    case 'officer':
-                    case 'intermediary':
-                        for (var index = 1; index < $tableTR.length; index++) {
-                            var td = $tableTR.eq(index).find('td');
-                            var td2aAll = td.eq(2).find('a');
-                            if (td2aAll.length <= 0) {
-                                continue;
-                            }
-                            var td2a = td2aAll.eq(0);
-
-                            var ahref = unescape(decodeURI(td2a.attr('href')));
-
-
-                            // console.log(td.text());
-                            var postItemsconnections = {
-                                $id: (index + 2),
-                                nameFrom: this.tmpdata.name,
-                                nameFromDesc: this.tmpdata.nameDesc,
-                                nameType: td.eq(1).text().trim(),
-                                nameTo: ahref.split('_')[1],
-                                nameToDesc: td2a.text(),
-                                Tid: 0,
-                                Remark: this.url,
-                                getPage: 1,
-                                tStatus: 0,
-                                ClientIP: undefined,
-                                addDate: undefined,
-                                UpdateDate: undefined
-                            }
-                            postMain.connections.push(postItemsconnections);
-
-                            //end for  
-                        }
-                        break;
-                    case "entity":
-                        for (var index = 1; index < $tableTR.length; index++) {
-                            var td = $tableTR.eq(index).find('td');
-                            var td2aAll = td.eq(0).find('a');
-                            var tmptype = td.eq(1).text().trim();
-                            if (!tmptype == 'Intermediary of') {
-                                continue;
-                            }
-                            if (td2aAll.length <= 0) {
-                                continue;
-                            }
-
-                            var td2a = td2aAll.eq(0);
-
-                            var ahref = unescape(decodeURI(td2a.attr('href')));
-
-
-                            // console.log(td.text());
-                            var postItemsconnections = {
-                                $id: (index + 2),
-                                nameFrom: ahref.split('_')[1],
-                                nameFromDesc: td2a.text(),
-                                nameType: tmptype,
-                                nameTo: this.tmpdata.name,
-                                nameToDesc: this.tmpdata.nameDesc,
-                                Tid: 0,
-                                Remark: this.url,
-                                getPage: 1,
-                                tStatus: 0,
-                                ClientIP: undefined,
-                                addDate: undefined,
-                                UpdateDate: undefined
-                            }
-                            postMain.connections.push(postItemsconnections);
-
-                            //end for  
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                //console.log(postMain);
-
-                // $currItemIndex = $currItemIndex + 1;               
-                // getItemsNext()
-
-                // 提交数据库
-                $.ajax({
-                    type: 'POST',
-                    url: config.postApi_Panamadb,
-                    tmpdata: postMain,
-                    timeout: 80000,
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify(postMain)
-                }).done(function(data) {
-                    console.log(this.tmpdata.entitysAll.Countries + ',Type:' + this.tmpdata.entitysAll.ttype + ',nameDesc:' + this.tmpdata.entitysAll.nameDesc + '--> Post Done!')
-                        //
+                if ($tableTR.length <= 1 && this.tmppage > 1) {
+                    console.clear();
+                    console.log("CountPage:" + this.tmppage)
+                    $currRunPage = 1;
                     $currItemIndex = $currItemIndex + 1;
-                    //start get data
                     getItemsNext()
+                } else {
+                    var _remark = $getDiv.find('p[class="text-muted"]').eq(0).text().trim()
 
-                }).fail(function(err) {
+                    //console.log('Remark:' + _remark);
+
+                    var postMain = {
+                        Tid: this.tmpdata.Tid,
+                        entitysAll: {
+                            $id: "2",
+                            name: this.tmpdata.name,
+                            nameDesc: this.tmpdata.nameDesc,
+                            nameURL: this.tmpdata.nameURL,
+                            ttype: this.tmpdata.ttype,
+                            Countries: this.tmpdata.CountriesDesc,
+
+                            Source: undefined,
+                            Status: undefined,
+                            Address: undefined,
+                            CompanyType: undefined,
+                            Jurisdiction: undefined,
+
+                            Tid: 0,
+                            Remark: _remark,
+                            getPage: this.tmppage,
+                            tStatus: 0,
+                            ClientIP: undefined,
+                            addDate: undefined,
+                            UpdateDate: undefined
+                        },
+                        connections: []
+                    }
+
+                    //get for main
+                    for (var index = 0; index < $allp.length; index++) {
+                        var ptext = $allp.eq(index).text().replace(/[\↵\t\n\v\r]/g, '').trim();
+                        //console.log(index + ":" + ptext);
+                        if (ptext.indexOf("Source:") > -1) {
+                            postMain.entitysAll.Source = ptext.replace('Source:', '').trim();
+                            continue;
+                        }
+                        if (ptext.indexOf("Status:") > -1) {
+                            postMain.entitysAll.Status = ptext.replace('Status:', '').trim();
+                            continue;
+                        }
+                        if (ptext.indexOf("Address:") > -1) {
+                            postMain.entitysAll.Address = ptext.replace('Address:', '').trim();
+                            continue;
+                        }
+                        if (ptext.indexOf("CompanyType:") > -1) {
+                            postMain.entitysAll.CompanyType = ptext.replace('CompanyType:', '').trim();
+                            continue;
+                        }
+                        if (ptext.indexOf("Jurisdiction:") > -1) {
+                            postMain.entitysAll.Jurisdiction = ptext.replace('Jurisdiction:', '').replace(/[\ ]/g, '');
+                            continue;
+                        }
+                    }
+                    switch (this.tmpdata.ttype) {
+                        case 'officer':
+                        case 'intermediary':
+                            for (var index = 1; index < $tableTR.length; index++) {
+                                var td = $tableTR.eq(index).find('td');
+                                var td2aAll = td.eq(2).find('a');
+                                if (td2aAll.length <= 0) {
+                                    continue;
+                                }
+                                var td2a = td2aAll.eq(0);
+
+                                var ahref = unescape(decodeURI(td2a.attr('href')));
+
+
+                                // console.log(td.text());
+                                var postItemsconnections = {
+                                    $id: (index + 2),
+                                    nameFrom: this.tmpdata.name,
+                                    nameFromURL: this.tmpdata.nameURL,
+                                    nameFromDesc: this.tmpdata.nameDesc,
+                                    nameType: td.eq(1).text().trim(),
+                                    nameTo: ahref.split('_')[1],
+                                    nameToURL: ahref,
+                                    nameToDesc: td2a.text(),
+                                    Tid: 0,
+                                    Remark: undefined,
+                                    getPage: this.tmppage,
+                                    tStatus: 0,
+                                    ClientIP: undefined,
+                                    addDate: undefined,
+                                    UpdateDate: undefined
+                                }
+                                postMain.connections.push(postItemsconnections);
+
+                                //end for  
+                            }
+                            break;
+                        case "entity":
+                        case "address":
+                            for (var index = 1; index < $tableTR.length; index++) {
+                                var td = $tableTR.eq(index).find('td');
+                                var td2aAll = td.eq(0).find('a');
+                                var tmptype = td.eq(1).text().trim();
+                                // if (!tmptype == 'Intermediary of') {
+                                //     continue;
+                                // }
+                                if (td2aAll.length <= 0) {
+                                    continue;
+                                }
+
+                                var td2a = td2aAll.eq(0);
+
+                                var ahref = unescape(decodeURI(td2a.attr('href')));
+
+
+                                // console.log(td.text());
+                                var postItemsconnections = {
+                                    $id: (index + 2),
+                                    nameFrom: ahref.split('_')[1],
+                                    nameFromURL: ahref,
+                                    nameFromDesc: td2a.text(),
+                                    nameType: tmptype,
+                                    nameTo: this.tmpdata.name,
+                                    nameToURL: this.tmpdata.nameURL,
+                                    nameToDesc: this.tmpdata.nameDesc,
+                                    Tid: 0,
+                                    Remark: undefined,
+                                    getPage: this.tmppage,
+                                    tStatus: 0,
+                                    ClientIP: undefined,
+                                    addDate: undefined,
+                                    UpdateDate: undefined
+                                }
+
+                                postMain.connections.push(postItemsconnections);
+
+                                //end for  
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //console.log(postMain);
+
+                    // $currItemIndex = $currItemIndex + 1;               
+                    // getItemsNext()
+
+                    // 提交数据库
+                    $.ajax({
+                        type: 'POST',
+                        url: config.postApi_Panamadb,
+                        tmppage: this.tmppage,
+                        tmpdata: postMain,
+                        timeout: 80000,
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(postMain)
+                    }).done(function(data) {
+                        console.log(this.tmpdata.entitysAll.Countries + ',Type:' + this.tmpdata.entitysAll.ttype + ',nameDesc:' + this.tmpdata.entitysAll.nameDesc + ",CurrPage:" + this.tmppage + '--> Post Done!')
+                            //
+                        $currRunPage = $currRunPage + 1;
+                        //$currItemIndex = $currItemIndex + 1;
+                        //start get data
+                        getItemsNext()
+
+                    }).fail(function(err) {
+                        $currRunPage = $currRunPage - 1;
+                        console.log("Error:" + this.url)
+                        console.log(err);
+                        //$currItemIndex = $currItemIndex - 1;
+                        //start get data
+                        getItemsNext()
+
+                    })
+                }
+
+
+            }).fail(function(err) {
+                $currRunPage = 1;
+                if (err.status === 404) {
+                    console.log('404: no data:' + this.url)
+                    $currItemIndex = $currItemIndex + 1;
+                    getItemsNext()
+                } else {
                     console.log("Error:" + this.url)
                     console.log(err);
                     $currItemIndex = $currItemIndex - 1;
                     //start get data
                     getItemsNext()
+                }
 
-                })
-
-            }).fail(function(err) {
-                console.log("Error:" + this.url)
-                console.log(err);
-                $currItemIndex = $currItemIndex - 1;
-                //start get data
-                getItemsNext()
             })
         }
         // $.ajax({

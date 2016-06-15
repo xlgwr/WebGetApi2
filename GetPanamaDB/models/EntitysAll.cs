@@ -21,6 +21,7 @@ namespace GetPanamaDB.models
 
         public string nameDesc { get; set; }
 
+        public string nameURL { get; set; }
         /// <summary>
         /// 公司/地址/中介/人员
         /// Entity/Address/Intermediary/Officer

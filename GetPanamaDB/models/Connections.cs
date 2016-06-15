@@ -24,6 +24,7 @@ namespace GetPanamaDB.models
         [StringLength(128)]
         public string nameFrom { get; set; }
         public string nameFromDesc { get; set; }
+        public string nameFromURL { get; set; }
 
         [Index(Order = 2)]
         [StringLength(256)]
@@ -37,6 +38,7 @@ namespace GetPanamaDB.models
         [StringLength(128)]
         public string nameTo { get; set; }
         public string nameToDesc { get; set; }
+        public string nameToURL { get; set; }
 
     }
 }

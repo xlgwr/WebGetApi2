@@ -64,10 +64,16 @@ namespace GetPanamaDBWebApi.Controllers
             }
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderby">0:asc,1:desc by addDate</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("api/topCountryItems/{id}")]
+        [Route("api/topCountryItems/{id}/{orderby}")]
         [ResponseType(typeof(ICollection<CountryItems>))]
-        public IQueryable<CountryItems> topCountryItems(int id)
+        public IQueryable<CountryItems> topCountryItems(int id, int orderby)
         {
             try
             {
@@ -75,8 +81,12 @@ namespace GetPanamaDBWebApi.Controllers
                 {
                     id = 1000;
                 }
-                var tmpModelsLast = db.CountryItems.Where(m => m.tStatus == 0).Take(id);
-                return tmpModelsLast;
+                var tmpModelsLast = db.CountryItems.Where(m => m.tStatus == 0);
+                if (orderby == 1)
+                {
+                    return tmpModelsLast.OrderByDescending(m => m.addDate).Take(id);
+                }
+                return tmpModelsLast.OrderBy(m => m.addDate).Take(id);
             }
             catch (Exception ex)
             {
@@ -162,12 +172,12 @@ namespace GetPanamaDBWebApi.Controllers
                             {
                                 getEntity.Add(viewmodels.entitysAll.name, true);
                                 //save db
-                                db.EntitysAll.Add(viewmodels.entitysAll);                               
+                                db.EntitysAll.Add(viewmodels.entitysAll);
                             }
                         }
                         else
                         {
-                            if (viewmodels.entitysAll.getPage > 0)
+                            if (viewmodels.entitysAll.getPage > 1)
                             {
                                 var getExit = db.EntitysAll.Where(m => m.name.Equals(viewmodels.entitysAll.name)).FirstOrDefault();
                                 if (getExit != null)
@@ -229,11 +239,11 @@ namespace GetPanamaDBWebApi.Controllers
                 //end
                 await db.SaveChangesAsync();
 
-                if (getEntity.Count > 50)
+                if (getEntity.Count > 100)
                 {
                     getEntity.Clear();
                 }
-                if (getConnection.Count > 50)
+                if (getConnection.Count > 100)
                 {
                     getConnection.Clear();
                 }

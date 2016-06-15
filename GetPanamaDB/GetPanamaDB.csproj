@@ -95,6 +95,14 @@
     <Compile Include="Migrations\201606140455315_addchangeIndexForCountIndexCountryItems.Designer.cs">
       <DependentUpon>201606140455315_addchangeIndexForCountIndexCountryItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606141026195_changeLengForName.cs" />
+    <Compile Include="Migrations\201606141026195_changeLengForName.Designer.cs">
+      <DependentUpon>201606141026195_changeLengForName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606141041014_addUrlForAll.cs" />
+    <Compile Include="Migrations\201606141041014_addUrlForAll.Designer.cs">
+      <DependentUpon>201606141041014_addUrlForAll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Connections.cs" />
     <Compile Include="models\base\model.cs" />
@@ -132,6 +140,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606140455315_addchangeIndexForCountIndexCountryItems.resx">
       <DependentUpon>201606140455315_addchangeIndexForCountIndexCountryItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606141026195_changeLengForName.resx">
+      <DependentUpon>201606141026195_changeLengForName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606141041014_addUrlForAll.resx">
+      <DependentUpon>201606141041014_addUrlForAll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
