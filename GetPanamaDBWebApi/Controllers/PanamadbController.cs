@@ -95,6 +95,28 @@ namespace GetPanamaDBWebApi.Controllers
 
         }
 
+        [HttpGet]
+        [Route("api/topNoCountryItems/{id}")]
+        [ResponseType(typeof(ICollection<noCountry>))]
+        public ICollection<noCountry> topNoCountryItems(int id)
+        {
+            try
+            {
+                if (id > 1000)
+                {
+                    id = 1000;
+                }
+                var tmpModelsLast = db.Database.SqlQuery<noCountry>("select * from dbo.v_noCountryForAdd").Take(id).ToList();
+
+                return tmpModelsLast;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         // POST: api/CountryItems
         [HttpPost]
         [Route("api/CountryItems")]

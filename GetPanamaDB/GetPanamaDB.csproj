@@ -111,6 +111,7 @@
     <Compile Include="models\base\modelTID.cs" />
     <Compile Include="models\GetPanamaDbContext.cs" />
     <Compile Include="models\modelviews\EntityConnect.cs" />
+    <Compile Include="models\modelviews\noCountry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

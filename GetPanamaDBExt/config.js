@@ -10,7 +10,8 @@ var config = {
     postApi_CountryItems: $gbHttpIp + "/api/CountryItems",
 
     getApi_getLast: $gbHttpIp + "/api/getLast",
-    getApi_topCountryItems: $gbHttpIp + "/api/topCountryItems/5/0" //{id}/{orderby} 0:asc,1:desc by addDate
+    getApi_topCountryItems: $gbHttpIp + "/api/topCountryItems/5/0", //{id}/{orderby} 0:asc,1:desc by addDate
+    getApi_topNoCountryItems: $gbHttpIp + "/api/topNoCountryItems/5" //{id}/{orderby} 0:asc,1:desc by addDate
 }
 
 var configGetUrl = {

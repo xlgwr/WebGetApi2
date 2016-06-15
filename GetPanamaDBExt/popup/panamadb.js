@@ -10,8 +10,10 @@
         //$(this).attr('disabled', null);
     });
 
-    //获取下级明细
-    getItems();
+    //获取下级明细,有国家
+    getItems(config.getApi_topCountryItems, "有国家");
+    //获取无国家资料
+    getItems(config.getApi_topNoCountryItems, "无国家");
 
     /////////////获取国家明细
     function getDatapanamadb(btn, msgid) {
@@ -239,8 +241,9 @@
         })
     }
 
-    function getItems() {
+    function getItems(geturl, title) {
         ///获取未更新前N条记录。
+        console.log(title + "," + geturl);
 
         var $currRunPage = 1;
         var $currItemIndex = 0;
@@ -250,7 +253,7 @@
             type: 'GET',
             timeout: 80000,
             contentType: 'application/json; charset=utf-8',
-            url: config.getApi_topCountryItems
+            url: geturl
         }).done(function(data) {
             console.log(this.url)
             console.log(data);
@@ -259,7 +262,7 @@
             getItemsNext()
 
         }).fail(function(err) {
-            console.log("获取明细Error:" + this.url)
+            console.log(title + ",获取明细Error:" + this.url)
             console.log(err);
         })
 
@@ -274,14 +277,19 @@
             }
 
             if ($currItemIndex >= $dataAllItems.length) {
-                console.log("处理完成：" + $dataAllItems.length + ",开始处理下：" + $dataAllItems.length + " 条。");
+                console.log(title + ",处理完成：" + $dataAllItems.length + ",开始处理下：" + $dataAllItems.length + " 条。");
                 //start main
-                getItems();
+                getItems(geturl, title);
                 return;
             }
-            console.log("开始处理：" + $currItemIndex + ",Page:" + $currRunPage);
+            console.log(title + ",开始处理：" + $currItemIndex + ",Page:" + $currRunPage);
             var tmpItem = $dataAllItems[$currItemIndex];
             //console.log(tmpItem);
+            if (tmpItem) {
+                if (!tmpItem.ttype) {
+                    tmpItem.ttype = tmpItem.nameURL.split('/')[3]
+                }
+            }
 
             //获取记录明细
             $.ajax({
@@ -294,9 +302,9 @@
                 timeout: 80000,
                 url: tmpItem.nameURL
             }).done(function(data) {
-                console.log(this.tmpdata.nameDesc + "," + this.url)
+                console.log(title + "," + this.tmpdata.nameDesc + "," + this.url)
                 var $body = $('<div></div>').html(data);
-                console.log("html lenght:" + data.length);
+                console.log(title + ",html lenght:" + data.length);
 
                 var $getDiv = $body.find('.container').eq(2).find('.col-sm-8').eq(0);
                 var $allp = $getDiv.find('p');
@@ -305,7 +313,9 @@
                 var $tableTR = $table.find('tr');
 
                 if ($tableTR.length <= 1 && this.tmppage > 1) {
+
                     console.clear();
+
                     console.log("CountPage:" + this.tmppage)
                     $currRunPage = 1;
                     $currItemIndex = $currItemIndex + 1;
@@ -465,7 +475,7 @@
                         contentType: 'application/json; charset=utf-8',
                         data: JSON.stringify(postMain)
                     }).done(function(data) {
-                        console.log(this.tmpdata.entitysAll.Countries + ',Type:' + this.tmpdata.entitysAll.ttype + ',nameDesc:' + this.tmpdata.entitysAll.nameDesc + ",CurrPage:" + this.tmppage + '--> Post Done!')
+                        console.log(title + "," + this.tmpdata.entitysAll.Countries + ',Type:' + this.tmpdata.entitysAll.ttype + ',nameDesc:' + this.tmpdata.entitysAll.nameDesc + ",CurrPage:" + this.tmppage + '--> Post Done!')
                             //
                         $currRunPage = $currRunPage + 1;
                         //$currItemIndex = $currItemIndex + 1;
@@ -474,7 +484,7 @@
 
                     }).fail(function(err) {
                         $currRunPage = $currRunPage - 1;
-                        console.log("Error:" + this.url)
+                        console.log(title + ",Error:" + this.url)
                         console.log(err);
                         //$currItemIndex = $currItemIndex - 1;
                         //start get data
@@ -491,7 +501,7 @@
                     $currItemIndex = $currItemIndex + 1;
                     getItemsNext()
                 } else {
-                    console.log("Error:" + this.url)
+                    console.log(title + ",Error:" + this.url)
                     console.log(err);
                     $currItemIndex = $currItemIndex - 1;
                     //start get data

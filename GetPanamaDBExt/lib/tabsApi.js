@@ -1,9 +1,6 @@
 tabsURLNoClose = [
     "chrome://extensions/",
-    "chrome-extension://",
-    "http://www.judiciary.gov.hk/en/crt_lists/daily_caulist.htm",
-    "http://www.judiciary.gov.hk/chs/crt_lists/daily_caulist.htm",
-    "http://www.judiciary.gov.hk/tc/crt_lists/daily_caulist.htm"
+    "chrome-extension://"
 ]
 tabs = {};
 tabIds = [];
@@ -31,6 +28,7 @@ Date.prototype.Format = function(fmt) { //author: meizz
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
 function bootStrap(i, msg) {
     chrome.windows.getCurrent(function(currentWindow) {
         currentWindowId = currentWindow.id;
@@ -56,6 +54,7 @@ function bootStrap(i, msg) {
 
     });
 };
+
 function removeTabUrl(id, msg) {
     //remove id
     tabIds.forEach(function(t) {
@@ -79,7 +78,9 @@ function isInt(i) {
 };
 
 function loadWindowList() {
-    chrome.windows.getAll({ populate: true }, function(windowList) {
+    chrome.windows.getAll({
+        populate: true
+    }, function(windowList) {
         tabs = {};
         tabIds = [];
         for (var i = 0; i < windowList.length; i++) {
@@ -93,6 +94,7 @@ function loadWindowList() {
         }
     });
 };
+
 function updateTabData(id) {
     var retval = {
         url: document.getElementById('url_' + id).value,
@@ -116,6 +118,7 @@ function moveTabData(id) {
         'windowId': parseInt(document.getElementById('windowId_' + id).value)
     }
 }
+
 function moveTab(id) {
     try {
         chrome.tabs.move(id, moveTabData(id));
@@ -181,4 +184,3 @@ function removeTab(tabId) {
 document.addEventListener('DOMContentLoaded', function() {
     bootStrap(1, "testme");
 });
-
