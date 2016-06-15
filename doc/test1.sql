@@ -11,6 +11,9 @@ select Countries,CountriesIndex,COUNT(Countries) from CountryItems
 group by Countries,CountriesIndex
 order by Countries
 
+select top 100 * from Connections order by addDate desc;
+select top 100 * from EntitysAll order by addDate desc;
+
 select count(*) from CountryItems;
 
 select count(*) from Connections;

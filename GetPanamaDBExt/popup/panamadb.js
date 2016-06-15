@@ -354,7 +354,13 @@
 
                     //get for main
                     for (var index = 0; index < $allp.length; index++) {
+                        //$allp.eq(index).find('br').replaceWith("@");
                         var ptext = $allp.eq(index).text().replace(/[\↵\t\n\v\r]/g, '').trim();
+
+                        if (ptext.indexOf("Countries:") > -1) {
+                            postMain.entitysAll.Countries = ptext.replace('Countries:', '').replace(/\ {2,}/g, '@').replace('@', '').trim();
+                            continue;
+                        }
                         //console.log(index + ":" + ptext);
                         if (ptext.indexOf("Source:") > -1) {
                             postMain.entitysAll.Source = ptext.replace('Source:', '').trim();

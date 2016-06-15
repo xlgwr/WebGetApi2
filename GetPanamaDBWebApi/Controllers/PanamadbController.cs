@@ -96,9 +96,9 @@ namespace GetPanamaDBWebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/topNoCountryItems/{id}")]
+        [Route("api/topNoCountryItems/{id}/{orderby}")]
         [ResponseType(typeof(ICollection<noCountry>))]
-        public ICollection<noCountry> topNoCountryItems(int id)
+        public ICollection<noCountry> topNoCountryItems(int id, int orderby)
         {
             try
             {
@@ -106,9 +106,12 @@ namespace GetPanamaDBWebApi.Controllers
                 {
                     id = 1000;
                 }
-                var tmpModelsLast = db.Database.SqlQuery<noCountry>("select * from dbo.v_noCountryForAdd").Take(id).ToList();
-
-                return tmpModelsLast;
+                var tmpModelsLast = db.Database.SqlQuery<noCountry>("select * from dbo.v_noCountryForAdd");
+                if (orderby == 1)
+                {
+                    return tmpModelsLast.OrderByDescending(m => m.name).Take(id).ToList();
+                }
+                return tmpModelsLast.OrderBy(m => m.name).Take(id).ToList();
             }
             catch (Exception ex)
             {
