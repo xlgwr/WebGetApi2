@@ -1,7 +1,7 @@
 USE [PanamaDB]
 GO
 
-/****** Object:  View [dbo].[v_allConnectionName]    Script Date: 2016/6/15 15:18:49 ******/
+/****** Object:  View [dbo].[v_allConnectionName]    Script Date: 2016/6/15 16:04:37 ******/
 SET ANSI_NULLS ON
 GO
 
