@@ -1,3 +1,4 @@
+use PanamaDB;
 select * from (select distinct getPage from CountryItems
 WHERE   (CountriesIndex = 38)) b
 ORDER BY getPage DESC -- where tStatus<>;
@@ -15,3 +16,5 @@ select count(*) from CountryItems;
 select count(*) from Connections;
 select count(*) from EntitysAll;
 
+
+select * from v_noCountryForAdd

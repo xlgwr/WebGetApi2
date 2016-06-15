@@ -1,7 +1,8 @@
+use PanamaDB;
 select * from [dbo].[EntitysAll]
-where name='14010245'
+where name='12020428'
 select * from [dbo].[Connections]
- where nameFrom='12031453'
+ where nameFrom='12020428'
  --where nameTo='12031453'
 
 --delete  from [dbo].[EntitysAll]
