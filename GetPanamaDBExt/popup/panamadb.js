@@ -339,6 +339,7 @@
                             Status: undefined,
                             Address: undefined,
                             CompanyType: undefined,
+                            DormDate: undefined,
                             Jurisdiction: undefined,
 
                             Tid: 0,
@@ -374,12 +375,17 @@
                             postMain.entitysAll.Address = ptext.replace('Address:', '').trim();
                             continue;
                         }
-                        if (ptext.indexOf("CompanyType:") > -1) {
-                            postMain.entitysAll.CompanyType = ptext.replace('CompanyType:', '').trim();
+
+                        if (ptext.indexOf("Company Type:") > -1) {
+                            postMain.entitysAll.CompanyType = ptext.replace('Company Type:', '').trim();
+                            continue;
+                        }
+                        if (ptext.indexOf("Dorm Date:") > -1) {
+                            postMain.entitysAll.DormDate = ptext.replace('Dorm Date:', '').trim();
                             continue;
                         }
                         if (ptext.indexOf("Jurisdiction:") > -1) {
-                            postMain.entitysAll.Jurisdiction = ptext.replace('Jurisdiction:', '').replace(/[\ ]/g, '');
+                            postMain.entitysAll.Jurisdiction = ptext.replace('Jurisdiction:', '').replace(/\ {2,}/g, '');
                             continue;
                         }
                     }

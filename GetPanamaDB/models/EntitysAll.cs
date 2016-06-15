@@ -53,6 +53,7 @@ namespace GetPanamaDB.models
         /// 公司 有
         /// </summary>
         public string CompanyType { get; set; }
+        public string DormDate { get; set; }
         /// <summary>
         /// 公司 有
         /// </summary>

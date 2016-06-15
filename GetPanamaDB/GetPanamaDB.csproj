@@ -103,6 +103,10 @@
     <Compile Include="Migrations\201606141041014_addUrlForAll.Designer.cs">
       <DependentUpon>201606141041014_addUrlForAll.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606151041591_addDormDate.cs" />
+    <Compile Include="Migrations\201606151041591_addDormDate.Designer.cs">
+      <DependentUpon>201606151041591_addDormDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Connections.cs" />
     <Compile Include="models\base\model.cs" />
@@ -147,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606141041014_addUrlForAll.resx">
       <DependentUpon>201606141041014_addUrlForAll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606151041591_addDormDate.resx">
+      <DependentUpon>201606151041591_addDormDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
