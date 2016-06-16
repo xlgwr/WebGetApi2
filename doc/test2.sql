@@ -9,6 +9,4 @@ select * from [dbo].[Connections]
 --delete  from [dbo].[Connections]
 --update CountryItems set tStatus=0
 
-select m.*,n.Tid from [dbo].[v_noCountryName] m left join dbo.EntitysAll n 
-on m.name=n.name
-where n.Tid is null
+select * from v_noCountryForAdd

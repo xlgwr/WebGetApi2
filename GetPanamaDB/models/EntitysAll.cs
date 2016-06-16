@@ -33,8 +33,8 @@ namespace GetPanamaDB.models
         /// <summary>
         /// 国家
         /// </summary>
-        [Index(Order = 2)]
-        [StringLength(128)]
+        //[Index(Order = 2)]
+        //[StringLength(128)]
         public string Countries { get; set; }
 
         /// <summary>

@@ -1,5 +1,8 @@
 ﻿$(function() {
 
+    var $runAllCountryOver = 0;
+    var $runAllNoCountryOver = 0;
+
     $('#btn1hklaw').click(function() {
         $('#panelhklaw').removeClass('panel-default')
         $('#panelhklaw').addClass('panel-success')

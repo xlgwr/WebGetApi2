@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201606151041591_addDormDate.Designer.cs">
       <DependentUpon>201606151041591_addDormDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606160115500_changeLengthForCountry.cs" />
+    <Compile Include="Migrations\201606160115500_changeLengthForCountry.Designer.cs">
+      <DependentUpon>201606160115500_changeLengthForCountry.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Connections.cs" />
     <Compile Include="models\base\model.cs" />
@@ -154,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606151041591_addDormDate.resx">
       <DependentUpon>201606151041591_addDormDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160115500_changeLengthForCountry.resx">
+      <DependentUpon>201606160115500_changeLengthForCountry.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

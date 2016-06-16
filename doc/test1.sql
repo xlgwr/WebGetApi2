@@ -22,4 +22,7 @@ select count(*) from EntitysAll;
 
 select * from v_noCountryForAdd;
 
-select name from EntitysAll where Source is null
+select * from EntitysAll where status='Dead' and DormDate is null and CompanyType is null
+
+--update CountryItems set tStatus=0 from CountryItems where name in (select name from EntitysAll where status='Dead' and DormDate is null and CompanyType is null and ClientIP='192.168.1.6')
+--delete from EntitysAll where status='Dead' and DormDate is null and CompanyType is null and ClientIP='192.168.1.6'
