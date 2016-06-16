@@ -267,6 +267,7 @@
         }).fail(function(err) {
             console.log(title + ",获取明细Error:" + this.url)
             console.log(err);
+            getItems(geturl, title);
         })
 
         function getItemsNext() {

@@ -13,6 +13,7 @@ order by Countries
 
 select top 1000 * from Connections order by addDate desc;
 select top 1000 * from EntitysAll order by addDate desc;
+select top 1000 * from EntitysAll where Countries='' order by addDate desc;
 
 select count(*) from CountryItems;
 
