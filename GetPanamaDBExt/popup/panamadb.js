@@ -435,40 +435,66 @@
                             for (var index = 1; index < $tableTR.length; index++) {
                                 var td = $tableTR.eq(index).find('td');
                                 var td2aAll = td.eq(0).find('a');
+                                var td2aAll2 = td.eq(2).find('a');
+
                                 var tmptype = td.eq(1).text().trim();
                                 // if (!tmptype == 'Intermediary of') {
                                 //     continue;
                                 // }
-                                if (td2aAll.length <= 0) {
+                                if (td2aAll.length <= 0 && td2aAll2.length <= 0) {
                                     continue;
                                 }
 
-                                var td2a = td2aAll.eq(0);
+                                if (td2aAll.length > 0) {
+                                    var td2a = td2aAll.eq(0);
+                                    var ahref = unescape(decodeURI(td2a.attr('href')));
 
-                                var ahref = unescape(decodeURI(td2a.attr('href')));
+                                    // console.log(td.text());
+                                    var postItemsconnections = {
+                                        $id: (index + 2),
+                                        nameFrom: ahref.split('_')[1],
+                                        nameFromURL: ahref,
+                                        nameFromDesc: td2a.text(),
+                                        nameType: tmptype,
+                                        nameTo: this.tmpdata.name,
+                                        nameToURL: this.tmpdata.nameURL,
+                                        nameToDesc: this.tmpdata.nameDesc,
+                                        Tid: 0,
+                                        Remark: undefined,
+                                        getPage: this.tmppage,
+                                        tStatus: 0,
+                                        ClientIP: undefined,
+                                        addDate: undefined,
+                                        UpdateDate: undefined
+                                    }
+                                    postMain.connections.push(postItemsconnections);
 
+                                } else {
+                                    if (td2aAll2.length > 0) {
+                                        var td2a2 = td2aAll2.eq(0);
+                                        var ahref2 = unescape(decodeURI(td2a2.attr('href')));
 
-                                // console.log(td.text());
-                                var postItemsconnections = {
-                                    $id: (index + 2),
-                                    nameFrom: ahref.split('_')[1],
-                                    nameFromURL: ahref,
-                                    nameFromDesc: td2a.text(),
-                                    nameType: tmptype,
-                                    nameTo: this.tmpdata.name,
-                                    nameToURL: this.tmpdata.nameURL,
-                                    nameToDesc: this.tmpdata.nameDesc,
-                                    Tid: 0,
-                                    Remark: undefined,
-                                    getPage: this.tmppage,
-                                    tStatus: 0,
-                                    ClientIP: undefined,
-                                    addDate: undefined,
-                                    UpdateDate: undefined
+                                        // console.log(td.text());
+                                        var postItemsconnections = {
+                                            $id: (index + 2),
+                                            nameFrom: this.tmpdata.name,
+                                            nameFromURL: this.tmpdata.nameURL,
+                                            nameFromDesc: this.tmpdata.nameDesc,
+                                            nameType: tmptype,
+                                            nameTo: ahref2.split('_')[1],
+                                            nameToURL: ahref2,
+                                            nameToDesc: td2a2.text(),
+                                            Tid: 0,
+                                            Remark: undefined,
+                                            getPage: this.tmppage,
+                                            tStatus: 0,
+                                            ClientIP: undefined,
+                                            addDate: undefined,
+                                            UpdateDate: undefined
+                                        }
+                                        postMain.connections.push(postItemsconnections);
+                                    }
                                 }
-
-                                postMain.connections.push(postItemsconnections);
-
                                 //end for  
                             }
                             break;
