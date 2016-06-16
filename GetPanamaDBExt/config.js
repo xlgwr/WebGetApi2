@@ -11,7 +11,7 @@ var config = {
 
     getApi_getLast: $gbHttpIp + "/api/getLast",
     getApi_topCountryItems: $gbHttpIp + "/api/topCountryItems/50/0", //{id}/{orderby} 0:asc,1:desc by addDate
-    getApi_topNoCountryItems: $gbHttpIp + "/api/topNoCountryItems/5/0" //{id}/{orderby} 0:asc,1:desc by addDate
+    getApi_topNoCountryItems: $gbHttpIp + "/api/topNoCountryItems/50/0" //{id}/{orderby} 0:asc,1:desc by addDate
 }
 
 var configGetUrl = {
